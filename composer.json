@@ -1,0 +1,17 @@
+{
+  "name": "fortextexe/apiservisim-sdk",
+  "description": "Apiservisim'in 36 Türkçe API servisi için PHP SDK'sı",
+  "type": "library",
+  "require": {
+    "php": ">=8.1",
+    "ext-curl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Fortext\\ApiServisim\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "php tests/run.php"
+  }
+}
