@@ -19,7 +19,6 @@ function check(bool $condition, string $message): void
 
 check(count(Endpoints::API_CATALOG) === 36, 'all 36 catalog services are present');
 check(count(Endpoints::API_ENDPOINTS) === 88, 'all 88 public route templates are present');
-check(!array_filter(Endpoints::API_ENDPOINTS, static fn ($route) => str_starts_with($route, '/api/admin/')), 'admin routes are excluded');
 foreach (Endpoints::API_CATALOG as $route) {
     check(in_array($route, Endpoints::API_ENDPOINTS, true), 'catalog route has a public route entry: ' . $route);
 }

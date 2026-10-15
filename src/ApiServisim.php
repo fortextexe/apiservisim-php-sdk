@@ -40,7 +40,7 @@ final class ApiServisim
         $this->timeout = $timeout;
         $this->headers = array_merge([
             'Accept' => 'application/json, */*;q=0.8',
-            'User-Agent' => 'apiservisim-php/0.1.0',
+            'User-Agent' => 'apiservisim-php/0.1.1',
         ], $headers);
         $this->transport = $transport;
     }

@@ -1,23 +1,26 @@
 # Apiservisim PHP SDK
 
-Apiservisim'in **36 API kartına ve 88 public endpoint şablonuna** PHP ile erişmek için istemci. PHP 8.1+ ve `ext-curl` gerekir; iç yönetim uçları (`/api/admin/...`) public SDK kataloğuna alınmamıştır. Dış Composer/HTTP kütüphanesi bağımlılığı yoktur.
+Apiservisim'in **36 API kartına ve 88 public endpoint şablonuna** PHP ile erişmek için istemci. PHP 8.1+ ve `ext-curl` gerekir. Dış Composer/HTTP kütüphanesi bağımlılığı yoktur.
 
 ## Kurulum
 
-Kaynak kodu `php-sdk/` altındadır. Packagist yayını henüz yapılmadı; bu nedenle şu an Composer üzerinde `composer require` yerine depodan kullanın. SDK Composer PSR-4 ile yüklenebilir:
+Packagist üzerinden kurulum:
 
 ```bash
-cd php-sdk
-composer dump-autoload
+composer require fortextexe/apiservisim-sdk
 ```
 
-Bir uygulamada `php-sdk/vendor/autoload.php` dosyasını yükleyin. Packagist'e yayımlandıktan sonra kurulum komutu `composer require fortextexe/apiservisim-sdk` olacaktır.
+Uygulamanızda Composer autoloader’ını ekleyin:
+
+```php
+require __DIR__ . '/vendor/autoload.php';
+```
 
 ## Hızlı başlangıç
 
 ```php
 <?php
-require __DIR__ . '/php-sdk/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 use Fortext\ApiServisim\ApiServisim;
 
