@@ -1,13 +1,21 @@
 # Apiservisim PHP SDK
 
-Apiservisim'in **36 API kartına ve 88 public endpoint şablonuna** PHP ile erişmek için istemci. PHP 8.1+ ve `ext-curl` gerekir. Dış Composer/HTTP kütüphanesi bağımlılığı yoktur.
+Apiservisim SDK 0.2.4: Python, Node.js ve PHP için 36 API servisi ve 88 public endpoint şablonu.
+
+## Ortak kapsam ve özellikler
+
+Python, Node.js ve PHP paketleri aynı API kataloğunu ve **0.2.4** ortak sürümünü kullanır.
+
+- Katalogdaki servis adıyla veya doğrudan endpoint şablonuyla çağrı yapar.
+- Dinamik yol ve query parametrelerini doğru biçimde kodlar.
+- GET ve JSON POST isteklerini destekler; JSON dışı yanıtları dilin yerel veri türünde döndürür.
+- Base URL, zaman aşımı ve özel header ayarlarını destekler.
+- Gereksinimler: Python 3.10+ (standart kütüphane), Node.js 18+ (yerleşik `fetch`), PHP 8.1+ (`ext-curl`).
 
 ## Kurulum
 
-Packagist üzerinden kurulum:
-
 ```bash
-composer require fortextexe/apiservisim-sdk
+composer require fortextexe/apiservisim-sdk:0.2.4
 ```
 
 Uygulamanızda Composer autoloader’ını ekleyin:
@@ -24,33 +32,29 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Fortext\ApiServisim\ApiServisim;
 
-$api = new ApiServisim(timeout: 10.0);
-$kurlar = $api->get('doviz');
-
+$api = new ApiServisim();
 $hava = $api->callApi('Hava Durumu API', [
     'pathParams' => ['sehir' => 'istanbul'],
-    'params' => ['days' => 3],
 ]);
+
+print_r($hava);
 ```
 
-Servis adı yerine doğrudan endpoint veya şablon da verilebilir:
+Aynı istemciyle farklı servisleri de çağırabilirsiniz:
 
 ```php
+$kurlar = $api->get('doviz');
 $kargo = $api->callApi('Kargo API', [
     'pathParams' => ['carrier' => 'aras', 'takip_no' => 'TAKIP-NO'],
 ]);
 ```
 
-Tek segmentli route parametreleri URL-encode edilir; `{path...}` catch-all şablonunda `/` ayırıcıları korunur. Query dizileri aynı anahtarı tekrar ederek gönderilir.
-
 ## JSON POST, ikili yanıt ve özel ayarlar
 
 ```php
-$sonuc = $api->tckimlik([
-    'tc' => '00000000000',
-    'ad' => 'Test',
-    'soyad' => 'Demo',
-    'dogum_yili' => 1990,
+$sonuc = $api->callApi('T.C. Kimlik No Kontrol API', [
+    'method' => 'POST',
+    'json' => ['tc' => '00000000000', 'ad' => 'Test', 'soyad' => 'Demo', 'dogum_yili' => 1990],
 ]);
 
 $png = $api->get('qr', ['data' => 'Merhaba', 'size' => 600]);
@@ -63,7 +67,7 @@ $ozel = new ApiServisim(
 );
 ```
 
-Gerçek kişisel verileri URL query'sine koymayın; hassas girdiler için POST JSON kullanın.
+Gerçek kişisel verileri URL query’sine koymayın; hassas girdiler için POST JSON kullanın.
 
 ## Hata yönetimi
 
@@ -80,7 +84,7 @@ try {
 }
 ```
 
-`request()` ile GET, POST, PUT, PATCH, DELETE veya katalogda henüz listelenmeyen bir endpoint çağrılabilir. `Endpoints::API_CATALOG` 36 servis adını; `Endpoints::API_ENDPOINTS` 88 public route şablonunu sunar. İki katalog da Python SDK manifestinden `python3 scripts/sync-sdk-manifests.py` komutuyla yenilenir. Ayrıntılı parametre, yanıt ve hata açıklamaları [Python SDK referansında](../python-sdk/README.md) yer alır.
+`request()` ile GET, POST, PUT, PATCH, DELETE veya katalogda henüz listelenmeyen bir endpoint çağrılabilir. `Endpoints::API_CATALOG` 36 servis adını; `Endpoints::API_ENDPOINTS` 88 public route şablonunu sunar. Ayrıntılı parametre ve yanıt bilgileri [Apiservisim API kataloğunda](https://apiservisim.vercel.app/#api-reference) yer alır.
 
 ## Test
 

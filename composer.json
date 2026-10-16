@@ -1,6 +1,6 @@
 {
   "name": "fortextexe/apiservisim-sdk",
-  "description": "Apiservisim'in 36 Türkçe API servisi için PHP SDK'sı",
+  "description": "Apiservisim SDK 0.2.4: Python, Node.js ve PHP için 36 API servisi ve 88 public endpoint şablonu.",
   "type": "library",
   "require": {
     "php": ">=8.1",
